@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <title>Workers</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-md-center mt-5">
+        <div class="col-6">
+          <form class="form">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Name"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">date</label>
+              <input type="date" class="form-control" id="Date" />
+            </div>
+            <div class="mb-3">
+              <select class="form-select" id="Options">
+                <option>Open this select menu</option>
+                <option selected value="start">START</option>
+                <option value="break1">BREAK1</option>
+                <option value="break2">BREAK2</option>
+                <option value="finish">FINISH</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">SEND</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    "use strict";
+    let path = {
+      start: "start_day",
+      break1: "first_break",
+      break2: "second_break",
+      finish: "end_day",
+    };
+    window.addEventListener("load", function () {
+      let form = document.querySelector(".form");
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const name = form.elements.Name.value;
+        const date = form.elements.Date.value;
+        const option = form.elements.Options.value;
+        const data = {
+          name,
+          [option]: new Date().toLocaleTimeString(),
+          date,
+        };
+        console.log(data);
+        const requestOptions = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        };
+
+        const response = await fetch(`${path[[option]]}`, requestOptions);
+        let result = await response.json();
+      });
+    });
+  </script>
+</html>
