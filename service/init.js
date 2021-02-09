@@ -8,12 +8,18 @@ module.exports = async () => {
   try {
     await doc.useServiceAccountAuth(creds);
     await doc.loadInfo();
-     const sheet =  doc.sheetsByIndex[0]
-    await sheet.updateProperties({ title: 'Workers' });
-    await sheet.setHeaderRow(["name", "date", "start", "break1", "break2", "finish"]) ;
+    const sheet = doc.sheetsByIndex[0];
+    await sheet.updateProperties({ title: "Workers" });
+    await sheet.setHeaderRow([
+      "name",
+      "date",
+      "start",
+      "break1",
+      "break2",
+      "finish",
+    ]);
     return sheet;
   } catch (error) {
-      console.error(error);
+    console.error(error);
   }
-  
 };

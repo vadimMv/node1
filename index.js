@@ -4,7 +4,6 @@ const port = 3000;
 const app = express();
 
 app.use(bodyParser.json());
-// app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use("/", require("./routers/web"));
 app.use("/", require("./routers/service"));
 app.use((req, res, next) => {
